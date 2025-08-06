@@ -1,50 +1,57 @@
-# Welcome to your Expo app 👋
+🧊 Rotom — Your Smart Fridge Assistant (🚧 In Development)
+Rotom is an AI-powered food freshness tracker that helps reduce waste and manage your fridge intelligently. It gives you expiry reminders, fridge insights, and a clean dashboard UI — right on your phone.
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Get started
+📱 Features
+✅ Dashboard View with summary cards (total items, expiring soon, categories)
 
-1. Install dependencies
+✅ Add & Manage Food Items (name, expiry, location, notes)
 
-   ```bash
-   npm install
-   ```
+✅ Expiry Detection and smart notifications
 
-2. Start the app
+✅ Expiring Soon Alerts with badge + slide-in panel
 
-   ```bash
-   npx expo start
-   ```
+✅ Categories & Storage Location filtering (Fridge / Freezer / Pantry)
 
-In the output, you'll find options to open the app in a
+✅ Firebase Authentication (email/password)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+✅ Persistent Storage using Firestore + Zustand
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+✅ Custom Header with Notification Access
 
-## Get a fresh project
+✅ Dark UI theme optimized for visual clarity
 
-When you're ready, run:
+🧠 Future: AI food detection via photo
 
-```bash
-npm run reset-project
-```
+🧠 Future: Calorie & nutrition tracking
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+🔧 Tech Stack
+React Native (Expo)
 
-## Learn more
+Firebase (Auth + Firestore)
 
-To learn more about developing your project with Expo, look at the following resources:
+Zustand (for state management)
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Expo Router
 
-## Join the community
+Safe Area + Gesture Handler
 
-Join our community of developers creating universal apps.
+TypeScript
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+🚧 Status
+Rotom is actively being developed.
+Expect regular UI and feature updates over the next few weeks.
+
+🧪 Demo (Coming Soon)
+Screenshots and demo video will be available once MVP is complete.
+
+✨ Inspiration
+Rotom is inspired by the idea of a smart fridge assistant that keeps you mindful of food usage, blending practical utility with a clean design.
+
+
+👤 Author
+Safwan Rahman Khan
+Toronto, Canada
+LinkedIn
+GitHub
+
