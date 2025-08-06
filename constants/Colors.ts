@@ -1,30 +1,34 @@
-export default {
-  // Existing colors
-  primary: '#3D38ED',
-  primaryMuted: '#C9C8FA',
-  background: '#F5F5F5',
-  dark: '#141518',
-  gray: '#626D77',
-  lightGray: '#D8DCE2',
+const Colors = {
+  // Base UI
+  background: '#0B0F1A',
+  dark: '#121621',
+  light: '#FFFFFF',
+  softGrey: '#E5E7EB',
+  grey: '#A1A1AA',
+  transparentWhite: 'rgba(255, 255, 255, 0.1)',
+  border: '#2C2F36',
+
+
+  // Text
+  textPrimary: '#F9FAFB',      // Light text for dark background
+  textSecondary: '#9CA3AF',    // Muted text
+  placeholder: '#6B7280',      // Placeholder/input hint text
+
+  // Accent & Brand
+  accent: '#22D3EE', // Cyan/Aqua for brand highlights
+  primary: '#22D3EE', // Primary call-to-action (can be same as accent)
+  tint: '#3B82F6',    // Tint or highlight (keep or update)
+
+  // States
+  green: '#4ADE80',   // Success
+  red: '#EF4444',     // Error / Delete
+  yellow: '#FACC15',  // Warning / Alert
+  blue: '#3B82F6',    // Info / Secondary actions
+
+  // Surfaces
+  cardBackground: '#1F2937',
+  overlay: 'rgba(0,0,0,0.5)', // Modal background overlay
   
-  // New colors
-  success: '#00C851',       // Green for positive changes
-  successMuted: '#A5D6A7',  // Muted green
-  danger: '#FF4444',        // Red for negative changes
-  dangerMuted: '#EF9A9A',   // Muted red
-  warning: '#FFBB33',       // Yellow/orange for warnings
-  info: '#33B5E5',         // Blue for informational items
-  
-  // Additional background colors
-  cardBackground: '#FFFFFF',
-  inputBackground: '#FFFFFF',
-  
-  // Text colors
-  textPrimary: '#141518',
-  textSecondary: '#626D77',
-  textTertiary: '#9E9E9E',
-  
-  // Border colors
-  border: '#E0E0E0',
-  borderDark: '#BDBDBD',
 };
+
+export default Colors;

@@ -1,119 +1,94 @@
 import Colors from '@/constants/Colors';
 import { defaultStyles } from '@/constants/Styles';
-import { isClerkAPIResponseError, useSignIn } from '@clerk/clerk-expo';
-import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { auth } from '@/lib/firebaseConfig';
+import { Link, useRouter } from 'expo-router';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
-import { Alert, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-
-enum SignInType {
-  Email,
-  Google,
-  Apple
-}
+import { Alert, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 const Signin = () => {
   const [email, setEmail] = useState('');
-  const keyboardVerticalOffset = Platform.OS === 'ios' ? 80 : 0;
+  const [password, setPassword] = useState('');
   const router = useRouter();
-  const { signIn } = useSignIn();
+  const offset = Platform.OS === 'ios' ? 80 : 0;
 
-  const onSignIn = async (type: SignInType) => {
-    if (type === SignInType.Email) {
-      try {
-        const { supportedFirstFactors } = await signIn!.create({
-          identifier: email,
-        });
-        const firstEmailFactor: any = supportedFirstFactors?.find((factor: any) => {
-          return factor.strategy === 'email_code';
-        });
-        const { emailAddressId } = firstEmailFactor;
-        await signIn!.prepareFirstFactor({
-          strategy: 'email_code',
-          emailAddressId,
-        });
-        router.push({
-          pathname: '/verify/[email]',
-          params: { email, phone: email, signin: 'true' },
-        });
-      } catch (err) {
-        console.log('error', JSON.stringify(err, null, 2));
-        if (isClerkAPIResponseError(err)) {
-          Alert.alert('Error', err.errors[0].message);
-        }
-      }
+  const handleLogin = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      router.replace('/(tabs)/home');
+    } catch (error: any) {
+      Alert.alert('Login Failed', error.message);
     }
   };
 
   return (
-    <KeyboardAvoidingView
-    style={{ flex: 1 }}
-    behavior="padding"
-    keyboardVerticalOffset={keyboardVerticalOffset}>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={offset}>
       <View style={defaultStyles.container}>
-        <Text style={defaultStyles.header}>Time to make moves</Text>
+        <Text style={defaultStyles.header}>Time to chill smart</Text>
         <Text style={defaultStyles.descriptionText}>
-          Enter your Email Address associated with your account
+          Enter your email and password to sign in
         </Text>
+
         <View style={styles.inputContainer}>
-          <TextInput style={[styles.input, { flex: 1 }]} 
-          placeholder='Email Address' keyboardType='email-address' autoCapitalize='none' placeholderTextColor={Colors.gray}
-          value={email} onChangeText={setEmail}/>
+          <TextInput
+            style={[styles.input, { flex: 1 }]}
+            placeholder="Email Address"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            placeholderTextColor={Colors.grey}
+            value={email}
+            onChangeText={setEmail}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={[styles.input, { flex: 1 }]}
+            placeholder="Password"
+            secureTextEntry
+            placeholderTextColor={Colors.grey}
+            value={password}
+            onChangeText={setPassword}
+          />
         </View>
 
         <TouchableOpacity
           style={[
             defaultStyles.pillButton,
-            email !== '' ? styles.enabled : styles.disabled,
+            email && password ? styles.enabled : styles.disabled,
             { marginBottom: 20 },
           ]}
-          onPress={() => onSignIn(SignInType.Email)}
-          >
+          onPress={handleLogin}
+        >
           <Text style={defaultStyles.buttonText}>Continue</Text>
         </TouchableOpacity>
 
-        <View style={{flexDirection: 'row', alignItems: 'center', gap: 16}}>
-          <View style={{ flex: 1, height: StyleSheet.hairlineWidth, backgroundColor: Colors.gray}}/>
-          <Text style={{ color: Colors.gray, fontSize: 20}}>or</Text>
-          <View style={{ flex: 1, height: StyleSheet.hairlineWidth, backgroundColor: Colors.gray}}/>
-        </View>
-        <View style={{ flexDirection: 'row', gap: 16, marginTop: 32 }}>
-          <TouchableOpacity style={[defaultStyles.pillButton, { backgroundColor: '#fff', flex: 1 }]} onPress={() => onSignIn(SignInType.Google)}>
-            <Ionicons name="logo-google" size={24} color={'#000'} />
+        <Link href={'/signup'} replace asChild>
+          <TouchableOpacity>
+            <Text style={defaultStyles.textLink}>Don't have an account? Sign up</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[defaultStyles.pillButton, { backgroundColor: '#fff', flex: 1 }]} onPress={() => onSignIn(SignInType.Apple)}>
-            <Ionicons name="logo-apple" size={24} color={'#000'} />
-          </TouchableOpacity>
-        </View>
-
+        </Link>
       </View>
-      <SafeAreaView style={{ alignItems: 'center', marginBottom: 16 }}>
-        <Text style={{ color: '#888', fontSize: 14 }}>
-          © 2025 Safwan Khan. All rights reserved.
-        </Text>
-      </SafeAreaView>
     </KeyboardAvoidingView>
-    
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   inputContainer: {
-    marginVertical: 40,
+    marginBottom: 20,
     flexDirection: 'row',
   },
   input: {
-    backgroundColor: Colors.lightGray,
+    backgroundColor: Colors.softGrey,
     padding: 20,
     borderRadius: 16,
-    fontSize: 20,
-    marginRight: 10,
+    fontSize: 18,
   },
   enabled: {
     backgroundColor: Colors.dark,
   },
   disabled: {
     backgroundColor: Colors.dark,
+    opacity: 0.5,
   },
 });
 

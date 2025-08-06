@@ -1,61 +1,108 @@
 import { StyleSheet } from 'react-native';
-import Colors from '@/constants/Colors';
+import Colors from './Colors';
 
 export const defaultStyles = StyleSheet.create({
+  pillButton: {
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 999,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 2,
+  },
+
+  card: {
+    backgroundColor: Colors.dark,
+    borderRadius: 16,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 3,
+  },
+
+  input: {
+    backgroundColor: Colors.softGrey,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 16,
+    marginBottom: 16,
+    color: Colors.dark,
+  },
+
+  textHeading: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: Colors.light,
+    marginBottom: 12,
+  },
+
+  textSub: {
+    fontSize: 16,
+    color: Colors.grey,
+    marginBottom: 8,
+  },
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-    padding: 16,
-  },
-  header: {
-    fontSize: 40,
-    fontWeight: '700',
-  },
-  pillButton: {
-    padding: 10,
-    height: 60,
-    borderRadius: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  textLink: {
-    color: "#311432",
-    fontSize: 18,
-    fontWeight: '500',
-  },
-  descriptionText: {
-    fontSize: 18,
-    marginTop: 20,
-    color: Colors.gray,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '500',
-  },
-  pillButtonSmall: {
+    paddingTop: 80,
     paddingHorizontal: 20,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
-  buttonTextSmall: {
-    color: '#fff',
+
+  header: {
+    fontSize: 32,
+    fontWeight: '800',
+    color: Colors.light,
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+
+  descriptionText: {
     fontSize: 16,
+    color: Colors.grey,
+    textAlign: 'center',
+    marginBottom: 32,
+  },
+
+  
+
+  buttonText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: Colors.light,
+    textAlign: 'center',
+  },
+
+  buttonTextSmall: {
+    fontSize: 14,
     fontWeight: '500',
+    color: Colors.dark,
   },
+
+  
+
+  pillButtonSmall: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 999,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.softGrey,
+  },
+
+  textLink: {
+    fontSize: 16,
+    color: Colors.accent,
+    marginTop: 24,
+    textAlign: 'center',
+  },
+
   sectionHeader: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    margin: 20,
-    marginBottom: 10,
-  },
-  block: {
-    marginHorizontal: 20,
-    padding: 14,
-    backgroundColor: '#fff',
-    borderRadius: 16,
-    gap: 20,
+    fontSize: 18,
+    fontWeight: '700',
+    color: Colors.textPrimary,
+    marginVertical: 16,
   },
 });

@@ -1,86 +1,116 @@
 import Colors from '@/constants/Colors';
+import { useFridgeStore } from '@/store/fridgeStore';
 import { Ionicons } from '@expo/vector-icons';
-import { BlurView } from 'expo-blur';
-import { Link } from 'expo-router';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Link, useRouter } from 'expo-router';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const CustomHeader = () => {
   const insets = useSafeAreaInsets();
-  return (
-    <BlurView intensity={80} tint='extraLight' style={{ paddingTop: insets.top }}>
-        <View
-            style={[
-            styles.container,
-            {
-                height: 60,
-                gap: 10,
-                paddingHorizontal: 20,
-                backgroundColor: 'transparent',
-            },
-        ]}>
-             <Link href={'/(auth)/(modals)/account'} asChild>
-              <TouchableOpacity
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 20,
-                  backgroundColor: Colors.gray,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Text style={{ color: '#fff', fontWeight: '500', fontSize: 16 }}>SK</Text>
-              </TouchableOpacity>
-            </Link>
-            <View style={styles.searchSection}>
-                <Ionicons style={styles.searchIcon} name="search" size={20} color={Colors.dark} />
-                <TextInput style={styles.input} placeholder="Search" placeholderTextColor={Colors.dark} />
-            </View>
-            
-        </View>
-    </BlurView>
-  )
-}
+  const router = useRouter();
+  const { items } = useFridgeStore();
 
-const styles = StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    btn: {
-      padding: 10,
-      backgroundColor: Colors.gray,
-    },
-    searchSection: {
-      flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: Colors.lightGray,
-      borderRadius: 30,
-    },
-    searchIcon: {
-      padding: 10,
-    },
-    input: {
-      flex: 1,
-      paddingTop: 10,
-      paddingRight: 10,
-      paddingBottom: 10,
-      paddingLeft: 0,
-      backgroundColor: Colors.lightGray,
-      color: Colors.dark,
-      borderRadius: 30,
-    },
-    circle: {
-      width: 40,
-      height: 40,
-      borderRadius: 30,
-      backgroundColor: Colors.lightGray,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
+  const expiringSoon = items.filter((item) => {
+    const diff = (new Date(item.expiryDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24);
+    return diff <= 2;
   });
 
-export default CustomHeader
+  return (
+    <View style={[styles.wrapper, { paddingTop: insets.top }]}>
+      <View style={styles.topRow}>
+        {/* App Title */}
+        <Text style={styles.title}>Rotom</Text>
+
+        {/* Right Side Icons */}
+        <View style={styles.iconGroup}>
+          {/* Notification Bell */}
+          <TouchableOpacity onPress={() => router.push('/notifications')}>
+            <View style={styles.notification}>
+              <Ionicons name="notifications-outline" size={24} color={Colors.textPrimary} />
+              {expiringSoon.length > 0 && (
+                <View style={styles.badge}>
+                  <Text style={styles.badgeText}>{expiringSoon.length}</Text>
+                </View>
+              )}
+            </View>
+          </TouchableOpacity>
+
+          {/* Avatar */}
+          <Link href="/modals/account" asChild>
+            <TouchableOpacity style={styles.circle}>
+              <Text style={styles.circleText}>SK</Text>
+            </TouchableOpacity>
+          </Link>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+export default CustomHeader;
+
+
+const styles = StyleSheet.create({
+  wrapper: {
+    backgroundColor: Colors.background,
+    paddingHorizontal: 20,
+    paddingBottom: 16,
+  },
+  topRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 60,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: Colors.accent,
+  },
+  iconGroup: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  circle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: Colors.cardBackground,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  circleText: {
+    color: Colors.textPrimary,
+    fontWeight: '600',
+  },
+  notification: {
+    position: 'relative',
+    padding: 2,
+  },
+  badge: {
+    position: 'absolute',
+    top: -2,
+    right: -4,
+    backgroundColor: Colors.red,
+    borderRadius: 8,
+    paddingHorizontal: 4,
+    paddingVertical: 1,
+  },
+  badgeText: {
+    color: '#fff',
+    fontSize: 10,
+    fontWeight: 'bold',
+  },
+  greeting: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: Colors.textPrimary,
+    marginTop: 10,
+  },
+  subtext: {
+    fontSize: 14,
+    color: Colors.textSecondary,
+    marginTop: 4,
+  },
+});
